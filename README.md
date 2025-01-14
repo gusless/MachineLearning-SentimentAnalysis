@@ -9,15 +9,11 @@
 * Descrever o problema.  
 * Descrever a base de dados. 
 
-## Metodologia 
-* Explicar quais técnicas de _machine learning_ (ML) que você está trabalhando. 
-* Explicar as etapas do treinamento e teste. 
-* Caso tenha selecionado atributos, explicar a motivação para a seleção de tais atributos.
-  
+## Metodologia   
 * A técnica de _machine learning_ utilizada neste projeto foi o _Natural Language Processing_ (NLP). O Processamento de Linguagem Natural trata-se da área voltada para a compreensão e interação entre humanos e máquinas por meio da linguagem natural. Esta técnica permite que computadores processem, analisem e interpretem textos ou falas humanas, identificando padrões e extraindo informações relevantes.
   A aplicação específica foi a análise de sentimentos, uma abordagem que utiliza modelos de NLP para classificar emoções ou opiniões expressas em textos, como positivas, negativas ou neutras. Para este estudo, os dados analisados foram os comentários de avaliação do restaurante Camarões.
-*
-*
+* Explicar as etapas do treinamento e teste. 
+* Caso tenha selecionado atributos, explicar a motivação para a seleção de tais atributos.
 ## Códigos
 * Mostrar trechos de códigos mais importantes e explicações.  
 * Informar o link para acessar o código. 
