@@ -5,8 +5,7 @@
 ### Identificação 
 * Augusto César da Silva Carvalho, 20230029867
 * Rita de Cassia Melo Nascimento, 20210017617
-### Informações Gerais
-* Descrever o problema.  
+### Informações Gerais 
 #### Descrição da Base de Dados de Avaliações do Restaurante Camarões
 
 #### Objetivo
@@ -34,7 +33,28 @@ Os dados foram tratados para ficarem legíveis para os modelos de machine learni
 - **Remoção de Stopwords**: Stopwords (palavras comuns e sem significado relevante, como "a", "de", "o", etc.) foram removidas dos comentários.
 
 #### Métodos Utilizados
+##### Gemini
 Para a análise de sentimentos e previsão das avaliações, foram utilizados os modelos **SIA** (Sentiment Intensity Analyzer) e **Gemini**.
+
+A API do Gemini é uma interface de programação de aplicativos (API) que permite integrar as funcionalidades da plataforma Gemini, desenvolvida pela Google, em aplicativos Python. A API é projetada para realizar tarefas de processamento de linguagem natural (PLN), como análise de sentimentos, reconhecimento de entidades, tradução de texto, análise de emoções, entre outras.
+
+A API do Gemini geralmente oferece acesso a diversos modelos treinados para lidar com textos em várias línguas e realizar tarefas complexas de PLN. É importante destacar que, enquanto o Gemini como um produto é amplamente acessado via interfaces gráficas, a API permite automação e integração em sistemas personalizados.
+
+Usando a API para Análise de Sentimentos: A API do Gemini pode ser usada para análise de sentimentos e outras tarefas relacionadas. Você pode usar a API para analisar texto, identificar sentimentos, emoções, ou realizar outras tarefas de PLN. O processo de uso típico envolve enviar uma solicitação com texto para a API e obter a resposta de volta.
+
+A API do Gemini pode exigir um plano de pagamento dependendo do volume de uso, já que muitas APIs de Google Cloud têm limites gratuitos, mas cobram por uso além desses limites.
+Durante o desenvolvimento do projeto, para contornar a limitação de uso da API do Gemini, decidimos selecionar uma **quantidade pequena de comentários** para análise em cada execução, de forma a evitar exceder os limites gratuitos da API. As análises de sentimentos eram realizadas apenas sobre um subconjunto de comentários, e os resultados eram **salvos em um arquivo CSV**, onde as avaliações eram constantemente adicionadas, permitindo o acompanhamento contínuo sem ultrapassar os custos associados ao uso excessivo da API. Essa estratégia ajudou a minimizar os gastos, mas não resolveu completamente o problema da limitação de volume de requisições, pois ainda assim era necessário aguardar um tempo para fazer outra requisição. 
+
+##### S  N SEI OQ 
+O **SentimentIntensityAnalyzer (SIA)** é uma ferramenta da biblioteca **NLTK** (Natural Language Toolkit) utilizada para análise de sentimentos. Ela avalia o texto e gera pontuações que indicam a polaridade e a intensidade emocional do conteúdo. O SIA utiliza um modelo baseado em léxico, que analisa a frequência de palavras associadas a sentimentos positivos, negativos ou neutros.
+
+O SIA gera quatro pontuações principais:
+1. **Positivo (pos)**: Quão positivo o texto é.
+2. **Negativo (neg)**: Quão negativo o texto é.
+3. **Neutro (neu)**: Quão neutro o texto é.
+4. **Compound**: Uma pontuação agregada que reflete o sentimento geral do texto, variando de -1 (extremamente negativo) a +1 (extremamente positivo).
+
+O **SIA** é simples de usar e é eficaz para analisar sentimentos em textos curtos, como resenhas de produtos ou posts em redes sociais. Contudo, pode ter limitações em textos mais complexos, com sarcasmo ou ambiguidade.
 
 #### Exemplo de Dados
 
@@ -96,10 +116,14 @@ for score in pol:
     else:
         sia_stars.append(3)  # Neutro
 ```
+ce pode ve isso [nesse código](code_folder/camaroes_sentiment.py)
 ```python
 
 ```
-* Mostrar trechos de códigos mais importantes e explicações.  
+
+
+* Mostrar trechos de códigos mais importantes e explicações.
+  
 * Informar o link para acessar o código. 
 
 ## Experimentos
