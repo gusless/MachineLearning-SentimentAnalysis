@@ -74,6 +74,7 @@ O **SIA** é simples de usar e é eficaz para analisar sentimentos em textos cur
 
 
 ## Metodologia   
+### SentimentIntensityAnalyzer
 A técnica de *machine learning* utilizada neste projeto foi o Processamento de Linguagem Natural (Natural Language Processing - NLP). Essa área da inteligência artificial é voltada para a interação entre humanos e máquinas por meio da linguagem natural. O NLP permite que computadores processem, analisem e interpretem textos ou falas humanas, identificando padrões e extraindo informações relevantes.  
 
 A aplicação específica foi a análise de sentimentos, uma abordagem que utiliza modelos de NLP para classificar emoções ou opiniões expressas em textos, como positivas, negativas ou neutras. Para este estudo, os dados analisados foram os comentários de avaliação do restaurante Camarões.
@@ -94,7 +95,7 @@ for i, row in data.iterrows():
     pol.append(sia.polarity_scores(text_t_norm))
     data.loc[i, 'Coments_norm'] = text_t_norm
 ```
-Para que o método do **SIA** funcionasse, foi necessário traduzir os comentários, originalmente, em português (ma grande maioria dos casos), para inglês. A tradução foi realizada com a biblioteca **googletrans**, utilizando a seguinte função:  
+Para que o método do **SIA** funcionasse, foi necessário traduzir os comentários, originalmente, em português (na grande maioria dos casos), para inglês. A tradução foi realizada com a biblioteca **googletrans**, utilizando a seguinte função:  
 ```for``` anterior:
 ```python
 def traduzir(text):
@@ -125,7 +126,7 @@ for score in pol:
     else:
         sia_stars.append(3)  # Neutro
 ```
-Em seguida, o resultado foi guardado [neste arquivo CSV](csv_folder/camaroes_sia_stars.csv), para ser analiado posteriormente.
+Os resultados finais, contendo as previsões de estrelas para cada comentário, foram salvos no arquivo [CSV](csv_folder/camaroes_sia_stars.csv), para ser analiado posteriormente.
 
 
 ## Códigos
