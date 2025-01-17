@@ -33,7 +33,8 @@ Os dados foram tratados para ficarem legíveis para os modelos de machine learni
 - **Remoção de Stopwords**: Stopwords (palavras comuns e sem significado relevante, como "a", "de", "o", etc.) foram removidas dos comentários.
 
 #### Métodos Utilizados
-##### Gemini
+- **Gemini API**
+  
 Para a análise de sentimentos e previsão das avaliações, foram utilizados os modelos **SIA** (Sentiment Intensity Analyzer) e **Gemini**.
 
 A API do Gemini é uma interface de programação de aplicativos (API) que permite integrar as funcionalidades da plataforma Gemini, desenvolvida pela Google, em aplicativos Python. A API é projetada para realizar tarefas de processamento de linguagem natural (PLN), como análise de sentimentos, reconhecimento de entidades, tradução de texto, análise de emoções, entre outras.
@@ -45,7 +46,8 @@ Usando a API para Análise de Sentimentos: A API do Gemini pode ser usada para a
 A API do Gemini pode exigir um plano de pagamento dependendo do volume de uso, já que muitas APIs de Google Cloud têm limites gratuitos, mas cobram por uso além desses limites.
 Durante o desenvolvimento do projeto, para contornar a limitação de uso da API do Gemini, decidimos selecionar uma **quantidade pequena de comentários** para análise em cada execução, de forma a evitar exceder os limites gratuitos da API. As análises de sentimentos eram realizadas apenas sobre um subconjunto de comentários, e os resultados eram **salvos em um arquivo CSV**, onde as avaliações eram constantemente adicionadas, permitindo o acompanhamento contínuo sem ultrapassar os custos associados ao uso excessivo da API. Essa estratégia ajudou a minimizar os gastos, mas não resolveu completamente o problema da limitação de volume de requisições, pois ainda assim era necessário aguardar um tempo para fazer outra requisição. 
 
-##### S  N SEI OQ 
+- **SentimentIntensityAnalyzer**
+
 O **SentimentIntensityAnalyzer (SIA)** é uma ferramenta da biblioteca **NLTK** (Natural Language Toolkit) utilizada para análise de sentimentos. Ela avalia o texto e gera pontuações que indicam a polaridade e a intensidade emocional do conteúdo. O SIA utiliza um modelo baseado em léxico, que analisa a frequência de palavras associadas a sentimentos positivos, negativos ou neutros.
 
 O SIA gera quatro pontuações principais:
