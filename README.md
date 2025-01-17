@@ -1,4 +1,4 @@
-# Análise de sentimentos de um restaurante
+# Análise de sentimentos de um restaurante utilizando NLP
 
 ## Introdução 
 
@@ -14,7 +14,7 @@ A base de dados contém informações sobre as avaliações feitas por usuários
 
 #### Fonte dos Dados
 - **Plataforma**: TripAdvisor
-- **Data de Coleta**: Dados coletados até o mês de **dezembro de 2024**.
+- **Data de Coleta**: Dados coletados até o mês de dezembro de 2024.
 
 #### Estrutura dos Dados
 A base de dados é composta por um arquivo no formato **CSV**, com as seguintes colunas:
@@ -67,11 +67,6 @@ O **SIA** é simples de usar e é eficaz para analisar sentimentos em textos cur
 | "Decepção com o serviço"     | "A comida estava boa, mas o atendimento foi muito demorado. Não voltarei tão cedo." | 2        |
 | "Recomendo a todos!"         | "Comida excelente, ambiente agradável e ótimo atendimento. Recomendo a todos!" | 4        |
 
-#### Uso Potencial
-A base de dados pode ser utilizada para:
-- **Análise de sentimentos**: Classificação de avaliações em positivas, negativas ou neutras.
-- **Treinamento de modelos preditivos**: Desenvolver modelos de machine learning para prever a nota de avaliação com base nos comentários.
-
 #### Limitações
 - **Representatividade**: A base contém apenas avaliações de um único restaurante, o que pode limitar a generalização dos resultados para outros estabelecimentos.
 - **Possíveis viéses**: A maioria das avaliações podem ser de clientes altamente satisfeitos ou insatisfeitos, o que pode afetar a distribuição das avaliações.
@@ -81,11 +76,9 @@ A base de dados pode ser utilizada para:
 ## Metodologia   
 * A técnica de _machine learning_ utilizada neste projeto foi o _Natural Language Processing_ (NLP). O Processamento de Linguagem Natural trata-se da área voltada para a compreensão e interação entre humanos e máquinas por meio da linguagem natural. Esta técnica permite que computadores processem, analisem e interpretem textos ou falas humanas, identificando padrões e extraindo informações relevantes.
 
-  A aplicação específica foi a análise de sentimentos, uma abordagem que utiliza modelos de NLP para classificar emoções ou opiniões expressas em textos, como positivas, negativas ou neutras. Para este estudo, os dados analisados foram os comentários de avaliação do restaurante Camarões.
-* Explicar as etapas do treinamento e teste. 
-* Caso tenha selecionado atributos, explicar a motivação para a seleção de tais atributos.
-## Códigos
-### Treinamento 
+A aplicação específica foi a análise de sentimentos, uma abordagem que utiliza modelos de NLP para classificar emoções ou opiniões expressas em textos, como positivas, negativas ou neutras. Para este estudo, os dados analisados foram os comentários de avaliação do restaurante Camarões.
+
+Primeiramente, foi feito o tratamento do banco de dados, deixando os comentarios nromalizados, de uma forma que seja melhor para o SIA ler as informações, *explicar os metodos. Após isso foi aplicado o método ```sia.polarity_scores()``` em cada elemento da lista contendo os comentarios:
 ```python
 for i, row in data.iterrows():
     text = row['Coments_norm']
@@ -95,8 +88,14 @@ for i, row in data.iterrows():
     pol.append(sia.polarity_scores(text_t_norm))
     data.loc[i, 'Coments_norm'] = text_t_norm
 ```
-### Tratamento do resultado do treinamento
-
+Para o método funcionar é necessario que o comentário esteja em inglês, e como o site tem como a maioria dos comentarios em portugues, foi necessário traduzir os comentarios, com a biblioteca _googletrans_ utilizando a seguinte função que é chamada dentro do ```for``` anterior:
+```python
+def traduzir(text):
+    translator = Translator()
+    traducao = translator.translate(str(text), dest='en').text
+    return traducao
+```
+O SIA irá entregar um resultado contendo uma série de pontuações, e com essas pontuaçoes foi feita uma previsão da avaliacao do usuário de 1 a 5 estrelas, para tentar maximizar a acurácia dessa previsão, foi feita uma analise cuidadosa, com diversos testes: analisando a variável compound, que representa um sentimento geral do comentário, somada as outras variáveis representando uma pontuacao neutra, positiva e negativa, até chegar no seguinte código:
 ```python
 for score in pol:
     compound = score['compound']
@@ -119,7 +118,13 @@ for score in pol:
     else:
         sia_stars.append(3)  # Neutro
 ```
-ce pode ve isso [nesse código](code_folder/camaroes_sentiment.py)
+Em seguida, o resultado foi guardado [neste arquivo CSV](csv_folder/camaroes_sia_stars.csv), para ser analiado posteriormente.
+
+
+## Códigos
+### Treinamento 
+### Tratamento do resultado do treinamento
+
 ```python
 
 ```
