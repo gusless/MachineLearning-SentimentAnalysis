@@ -5,11 +5,12 @@
 ### Identificação 
 * Augusto César da Silva Carvalho, 20230029867
 * Rita de Cassia Melo Nascimento, 20210017617
+  
 ### Informações Gerais 
 #### Descrição da Base de Dados de Avaliações do Restaurante Camarões
 
 #### Objetivo
-A base de dados contém informações sobre as avaliações feitas por usuários acerca do restaurante **Camarões** na plataforma **TripAdvisor**, com o objetivo de analisar os **sentimentos** e as **tendências de satisfação**. A base será utilizada para o treinamento de **modelos de machine learning** para **previsão de avaliações**.
+A base de dados contém informações sobre as avaliações feitas por usuários acerca do restaurante *Camarões* na plataforma *TripAdvisor*, com o objetivo de analisar os sentimentos e as tendências de satisfação. A base será utilizada para o treinamento de modelos de machine learning para previsão de avaliações, contribuindo para a compreensão do comportamento dos consumidores e para a tomada de decisões estratégicas.
 
 #### Fonte dos Dados
 - **Plataforma**: TripAdvisor
