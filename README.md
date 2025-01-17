@@ -74,11 +74,17 @@ O **SIA** é simples de usar e é eficaz para analisar sentimentos em textos cur
 
 
 ## Metodologia   
-* A técnica de _machine learning_ utilizada neste projeto foi o _Natural Language Processing_ (NLP). O Processamento de Linguagem Natural trata-se da área voltada para a compreensão e interação entre humanos e máquinas por meio da linguagem natural. Esta técnica permite que computadores processem, analisem e interpretem textos ou falas humanas, identificando padrões e extraindo informações relevantes.
+A técnica de *machine learning* utilizada neste projeto foi o Processamento de Linguagem Natural (Natural Language Processing - NLP). Essa área da inteligência artificial é voltada para a interação entre humanos e máquinas por meio da linguagem natural. O NLP permite que computadores processem, analisem e interpretem textos ou falas humanas, identificando padrões e extraindo informações relevantes.  
 
 A aplicação específica foi a análise de sentimentos, uma abordagem que utiliza modelos de NLP para classificar emoções ou opiniões expressas em textos, como positivas, negativas ou neutras. Para este estudo, os dados analisados foram os comentários de avaliação do restaurante Camarões.
 
-Primeiramente, foi feito o tratamento do banco de dados, deixando os comentarios nromalizados, de uma forma que seja melhor para o SIA ler as informações, *explicar os metodos. Após isso foi aplicado o método ```sia.polarity_scores()``` em cada elemento da lista contendo os comentarios:
+O primeiro passo foi o tratamento dos dados textuais, deixando os comentários normalizados para facilitar a interpretação pelo modelo **SIA (SentimentIntensityAnalyzer)**. Os processos de normalização incluíram:  
+- **Remoção de acentos e caracteres especiais**: Garantiu uniformidade no texto.  
+- **Padronização de caixa (lowercase)**: Todos os textos foram convertidos para letras minúsculas.  
+- **Remoção de stopwords**: Palavras sem relevância semântica, como "de", "o", "a", foram excluídas.  
+- **Eliminação de espaços em excesso e emojis**: Reduziu ruídos desnecessários no texto.
+
+Após isso foi aplicado o método ```sia.polarity_scores()``` em cada elemento da lista contendo os comentarios:
 ```python
 for i, row in data.iterrows():
     text = row['Coments_norm']
@@ -88,14 +94,15 @@ for i, row in data.iterrows():
     pol.append(sia.polarity_scores(text_t_norm))
     data.loc[i, 'Coments_norm'] = text_t_norm
 ```
-Para o método funcionar é necessario que o comentário esteja em inglês, e como o site tem como a maioria dos comentarios em portugues, foi necessário traduzir os comentarios, com a biblioteca _googletrans_ utilizando a seguinte função que é chamada dentro do ```for``` anterior:
+Para que o método do **SIA** funcionasse, foi necessário traduzir os comentários, originalmente, em português (ma grande maioria dos casos), para inglês. A tradução foi realizada com a biblioteca **googletrans**, utilizando a seguinte função:  
+```for``` anterior:
 ```python
 def traduzir(text):
     translator = Translator()
     traducao = translator.translate(str(text), dest='en').text
     return traducao
 ```
-O SIA irá entregar um resultado contendo uma série de pontuações, e com essas pontuaçoes foi feita uma previsão da avaliacao do usuário de 1 a 5 estrelas, para tentar maximizar a acurácia dessa previsão, foi feita uma analise cuidadosa, com diversos testes: analisando a variável compound, que representa um sentimento geral do comentário, somada as outras variáveis representando uma pontuacao neutra, positiva e negativa, até chegar no seguinte código:
+A partir das pontuações geradas pelo SIA, foi realizada uma previsão da avaliação do usuário, convertendo os sentimentos em notas de 1 a 5 estrelas. Após análises e testes cuidadosos, chegou-se a uma lógica que considera as variáveis `compound`, `pos`, `neg` e `neu` para atribuir as estrelas:
 ```python
 for score in pol:
     compound = score['compound']
