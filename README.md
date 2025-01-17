@@ -62,6 +62,43 @@ A base de dados pode ser utilizada para:
 * Explicar as etapas do treinamento e teste. 
 * Caso tenha selecionado atributos, explicar a motivação para a seleção de tais atributos.
 ## Códigos
+### Treinamento 
+```python
+for i, row in data.iterrows():
+    text = row['Coments_norm']
+    text_t = traduzir(text)
+    text_t_norm = text_normalizer(text_t)
+    time.sleep(2)
+    pol.append(sia.polarity_scores(text_t_norm))
+    data.loc[i, 'Coments_norm'] = text_t_norm
+```
+### Tratamento do resultado do treinamento
+
+```python
+for score in pol:
+    compound = score['compound']
+    neg = score['neg']
+    neu = score['neu']
+    pos = score['pos']
+
+    if compound >= 0.7 and pos > neg and pos > neu/2:
+        sia_stars.append(5)  # Muito positivo
+    elif compound >= 0.3 and pos > neg:
+        sia_stars.append(4)  # Positivo
+    elif compound >= 0.05 and pos > neg - 0.1 and pos > neu/3:
+        sia_stars.append(3) # Neutro tendendo ao positivo
+    elif compound <= -0.7 and neg > pos:
+        sia_stars.append(1)  # Muito negativo
+    elif compound <= -0.3 and neg > pos :
+        sia_stars.append(2)  # Negativo
+    elif neg > pos + 0.2 and neg > neu/3 :
+        sia_stars.append(2) # Neutro tendendo ao negativo
+    else:
+        sia_stars.append(3)  # Neutro
+```
+```python
+
+```
 * Mostrar trechos de códigos mais importantes e explicações.  
 * Informar o link para acessar o código. 
 
