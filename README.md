@@ -174,7 +174,7 @@ except:
 
 O uso de `try`/`except` foi necessário, considerando a possibilidade de instabilidade da API. Além disso, o `time.sleep(10)` foi incluído para evitar sobrecarga na API e respeitar os limites de requisições. Essa abordagem permitiu realizar análises contínuas e armazenar os resultados em um arquivo CSV, sem exceder os custos do serviço.
 
-Os resultados das análises foram salvos no arquivo [CSV](csv_folder/camaroes_gemini_stars.csv), onde as avaliações eram constantemente adicionadas, permitindo o acompanhamento contínuo sem ultrapassar os custos associados ao uso excessivo da API. Essa estratégia ajudou a minimizar os gastos, mas não resolveu completamente o problema da limitação de volume de requisições, pois ainda assim era necessário aguardar um tempo para fazer outra requisição. 
+Os resultados das análises foram salvos no arquivo [CSV](csv_folder/camaroes_gemini_stars.csv), onde as avaliações eram [constantemente adicionadas](#Etapas-para-Atualização-das-Avaliações-do-Gemini), permitindo o acompanhamento contínuo sem ultrapassar os custos associados ao uso excessivo da API. Essa estratégia ajudou a minimizar os gastos, mas não resolveu completamente o problema da limitação de volume de requisições, pois ainda assim era necessário aguardar um tempo para fazer outra requisição. 
 
 O código completo pode ser encontrado [aqui](code_folder/camaroes_gemini.ipynb).
 
@@ -255,9 +255,86 @@ def text_normalizer(text):
 ```
 O código completo pode ser achado neste [arquivo](code_folder/camaroes_sentiment.py).
 
+### Etapas para Atualização das Avaliações do Gemini
+
+Este código atualiza um arquivo CSV com avaliações processadas pela API Gemini, evitando duplicações e garantindo organização. Abaixo está a explicação de cada bloco:
+
+#### 1. Conversão Segura de Valores
+
+```python
+def safe_convert(value):
+    try:
+        return int(value)
+    except ValueError:
+        try:
+            return float(value)
+        except ValueError:
+            return value
+```
+
+- Função para tentar converter valores em `int` ou `float`. Caso a conversão falhe, retorna o valor original.
+
+#### 2. Leitura do Arquivo CSV
+
+```python
+listarquivo = []
+try:
+    with open(caminho, "r") as arquivo:
+        reader = csv.reader(arquivo)
+        next(reader, None)
+        listarquivo = [[safe_convert(x) for x in row] for row in reader]
+except FileNotFoundError:
+    listarquivo = []
+```
+
+- Lê o arquivo CSV especificado no caminho.
+- Converte os valores usando a função `safe_convert`.
+- Ignora o cabeçalho. Se o arquivo não existir, inicia com uma lista vazia.
+
+#### 3. Tratamento e Filtragem de Valores no Arquivo
+
+```python
+listarquivo = [[int(x) if isinstance(x, str) and x.isdigit() else float(x) if isinstance(x, str) and x.replace('.', '', 1).isdigit() else x for x in row] for row in listarquivo]
+existing_comment_numbers = [int(row[0]) for row in listarquivo if isinstance(row[0], (int, float))]
+gemilist = [[int(x) if isinstance(x, str) and x.isdigit() else float(x) if isinstance(x, str) and x.replace('.', '', 1).isdigit() else x for x in row] for row in gemilist]
+gemilist_filtered = [row for row in gemilist if int(row[0]) not in existing_comment_numbers]
+if gemilist_filtered:
+    with open(caminho, "a", newline='') as arquivo:
+        writer = csv.writer(arquivo)
+        writer.writerows(gemilist_filtered)
+```
+- Garante que os valores no arquivo sejam convertidos para números (`int` ou `float`), sempre que possível.
+- Extrai os números dos comentários existentes no arquivo para evitar duplicações.
+- Converte os novos dados (`gemilist`) e filtra os comentários que já existem no arquivo.
+- Adiciona ao arquivo somente os dados filtrados que não estavam presentes anteriormente.
+
+#### 4. Ordenação dos Dados e Regravação do Arquivo com Cabeçalho
+
+```python
+try:
+    with open(caminho, "r") as arquivo:
+        reader = csv.reader(arquivo)
+        next(reader, None)
+        dados = list(reader)
+except FileNotFoundError:
+    dados = []
+
+dados.sort(key=lambda row: int(row[0]))
+
+with open(caminho, "w", newline='') as arquivo:
+    writer = csv.writer(arquivo)
+    writer.writerow(["Número do Comentário", "Estrelas Gemini"])
+    writer.writerows(dados)
+```
+
+- Recarrega o arquivo atualizado e ordena os dados pelo número do comentário em ordem crescente.
+- Reescreve o arquivo, adicionando o cabeçalho e os dados ordenados.
+
 ---
 
-## Experimentos
+## Resultados
+
+
 * Descrever em detalhes os tipos de testes executados. 
 * Descrever os parâmentros avaliados. 
 * Explicar os resultados. 
