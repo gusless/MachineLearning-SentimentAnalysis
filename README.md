@@ -15,6 +15,8 @@ Este projeto tem como objetivo explorar a aplicação de técnicas de processame
 
 A base de dados contém informações sobre as avaliações feitas por usuários acerca do restaurante *Camarões* na plataforma *TripAdvisor*, com o objetivo de analisar os sentimentos e as tendências de satisfação. A base será utilizada para o treinamento de modelos de machine learning para previsão de avaliações, contribuindo para a compreensão do comportamento dos consumidores e para a tomada de decisões estratégicas.
 
+---
+
 ## Fonte dos Dados
 
 Os dados utilizados neste projeto foram extraídos do site TripAdvisor por meio de uma técnica de Web Scraping, que consiste em coletar informações diretamente do HTML do site. Durante a extração, foram capturados os títulos dos comentários (que tiveram pouca relevância na análise), o texto completo dos comentários e suas respectivas avaliações, variando de 1 a 5 estrelas. Os dados foram coletados até o final de dezembro de 2024, de forma que novas avaliações feitas após essa data não estão presentes no banco de dados.
@@ -33,6 +35,8 @@ O resultado dessa coleta foi consolidado em um arquivo [CSV](csv_folder/camaroes
 
 - **Representatividade**: A base contém apenas avaliações de um único restaurante, o que pode limitar a generalização dos resultados para outros estabelecimentos.
 - **Possíveis viéses**: A maioria das avaliações podem ser de clientes altamente satisfeitos ou insatisfeitos, o que pode afetar a distribuição das avaliações.
+
+---
 
 ## Métodos Utilizados
 
