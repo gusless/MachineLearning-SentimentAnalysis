@@ -5,18 +5,17 @@
 ### Identificação 
 * Augusto César da Silva Carvalho, 20230029867
 * Rita de Cassia Melo Nascimento, 20210017617
-  
-### Informações Gerais 
-#### Descrição da Base de Dados de Avaliações do Restaurante Camarões
 
-#### Objetivo
+---
+
+### Objetivo
 A base de dados contém informações sobre as avaliações feitas por usuários acerca do restaurante *Camarões* na plataforma *TripAdvisor*, com o objetivo de analisar os sentimentos e as tendências de satisfação. A base será utilizada para o treinamento de modelos de machine learning para previsão de avaliações, contribuindo para a compreensão do comportamento dos consumidores e para a tomada de decisões estratégicas.
 
 #### Fonte dos Dados
 - **Plataforma**: TripAdvisor
 - **Data de Coleta**: Dados coletados até o mês de dezembro de 2024.
 
-#### Estrutura dos Dados
+### Estrutura dos Dados
 A base de dados é composta por um arquivo no formato **CSV**, com as seguintes colunas:
 
 - **Título**: Título da avaliação feita pelo usuário.
@@ -71,7 +70,7 @@ O **SIA** é simples de usar e é eficaz para analisar sentimentos em textos cur
 - **Representatividade**: A base contém apenas avaliações de um único restaurante, o que pode limitar a generalização dos resultados para outros estabelecimentos.
 - **Possíveis viéses**: A maioria das avaliações podem ser de clientes altamente satisfeitos ou insatisfeitos, o que pode afetar a distribuição das avaliações.
 
-
+---
 
 ## Metodologia   
 ### SentimentIntensityAnalyzer
@@ -79,11 +78,7 @@ A técnica de *machine learning* utilizada neste projeto foi o Processamento de 
 
 A aplicação específica foi a análise de sentimentos, uma abordagem que utiliza modelos de NLP para classificar emoções ou opiniões expressas em textos, como positivas, negativas ou neutras. Para este estudo, os dados analisados foram os comentários de avaliação do restaurante Camarões.
 
-O primeiro passo foi o [tratamento dos dados textuais](#Etapas-de-Normalização-dos-Textos), deixando os comentários normalizados para facilitar a interpretação pelo modelo **SIA (SentimentIntensityAnalyzer)**. Os processos de normalização incluíram:  
-- **Remoção de acentos e caracteres especiais**: Garantiu uniformidade no texto.  
-- **Padronização de caixa (lowercase)**: Todos os textos foram convertidos para letras minúsculas.  
-- **Remoção de stopwords**: Palavras sem relevância semântica, como "de", "o", "a", foram excluídas.  
-- **Eliminação de espaços em excesso e emojis**: Reduziu ruídos desnecessários no texto.
+O primeiro passo foi o [tratamento dos dados textuais](#Etapas-de-Normalização-dos-Textos), deixando os comentários normalizados para facilitar a interpretação pelo modelo **SIA (SentimentIntensityAnalyzer)**.
 
 Após isso foi aplicado o método ```sia.polarity_scores()``` em cada elemento da lista contendo os comentarios:
 ```python
@@ -128,6 +123,7 @@ for score in pol:
 ```
 Os resultados finais, contendo as previsões de estrelas para cada comentário, foram salvos no arquivo [CSV](csv_folder/camaroes_sia_stars.csv), para ser analiado posteriormente.
 
+---
 
 ## Outros códigos
 ### Etapas de Normalização dos Textos
@@ -178,7 +174,7 @@ def remove_http(text):
     return pattern.sub("", text)
 ```
 6. **remove_stopwords(text)**  
-   - Remove palavras comuns sem significado relevante (stopwords) em várias línguas.
+   - Remove palavras comuns sem relevância semântica (stopwords), como "de", "o", "a", foram excluídas.  
 ```python
 regexp = RegexpTokenizer(r"\b\w+\b")
 linguas = ['portuguese', 'english', 'spanish', 'french']
@@ -202,13 +198,10 @@ def text_normalizer(text):
     text = remove_stopwords(text)
     return text
 ```
-### Tratamento do resultado do treinamento
 
-
-
-* Mostrar trechos de códigos mais importantes e explicações.
-  
 * Informar o link para acessar o código. 
+
+---
 
 ## Experimentos
 * Descrever em detalhes os tipos de testes executados. 
@@ -219,8 +212,7 @@ def text_normalizer(text):
 
 ## Conclusão 
 * O trabalho atendeu aos objetivos? 
-*
-*
+
 
 
 
