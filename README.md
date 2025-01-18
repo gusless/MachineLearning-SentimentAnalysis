@@ -411,11 +411,27 @@ A matriz de confusão das avaliações do Gemini está ilustrada abaixo:
 
 A análise revelou que a maioria dos comentários coletados foram positivos. O Gemini demonstrou um desempenho satisfatório, com uma boa correspondência entre suas avaliações e as opiniões reais dos clientes, mesmo com as limitações impostas pela amostragem reduzida.
 
-A acurácia do Gemini, calculada utilizando a função `accuracy_score()`, foi de 66%. Embora esse valor pareça relativamente baixo, ele não reflete adequadamente a realidade. Por exemplo, um cliente que avaliou o restaurante com 4 estrelas provavelmente teve uma experiência positiva, mas não suficiente para justificar 5 estrelas. Para lidar com isso, foi utilizada a função `calculate_modified_accuracy()`, que atribui um peso um pouco menor para avaliações que chegaram próximas da nota real. Com essa abordagem, a acurácia foi aumentada para 87%, um resultado mais coerente e representativo para este caso específico.
+A acurácia do Gemini, calculada utilizando a função `accuracy_score()`, foi de **66%**. Embora esse valor pareça relativamente baixo, ele não reflete adequadamente a realidade. Por exemplo, um cliente que avaliou o restaurante com 4 estrelas provavelmente teve uma experiência positiva, mas não suficiente para justificar 5 estrelas. Para lidar com isso, foi utilizada a função `calculate_modified_accuracy()`, que atribui um peso um pouco menor para avaliações que chegaram próximas da nota real. Com essa abordagem, a acurácia foi aumentada para **87%**, um resultado mais coerente e representativo para este caso específico.
 
 ### Análise das Avaliações do SentimentIntensityAnalyzer
 
-Para a avaliação do sia, foram geradas duas matrizes de confusão, uma para a avaliação de todos os comentários do banco de dados, e outra para os mesmos comentarios analizados pelo Gemini, para posteriormente ser feita uma comparação mais adequada entre os dois métodos.
+Para a avaliação do SIA, foram geradas duas matrizes de confusão, uma para a avaliação de todos os comentários do banco de dados, e outra para os mesmos comentarios analizados pelo Gemini, para posteriormente ser feita uma comparação mais adequada entre os dois métodos.
+
+Segue abaixo a matriz de confusão referente aos mesmos comentários avaliados pelo Gemini:  
+
+![Matriz de confusão do SIA com os mesmos comentários avaliados pelo Gemini](images/sia_matrix_confusion.png)
+
+Essa matriz revelou que a maioria dos comentários coletados foram positivos. O SentimentIntensityAnalyzer (SIA) apresentou um desempenho semelhante ao do Gemini, porém um pouco melhor, mesmo analisando exatamente os mesmos comentários.
+
+A acurácia, calculada com a função `accuracy_score()`, foi de **69%**. No entanto, ao aplicar o método `calculate_modified_accuracy()`, a acurácia subiu para **90%**, demonstrando consistentemente uma melhora de 3% em relação à avaliação realizada pelo Gemini.
+
+Segue abaixo matriz de confusão referente a todos os comentários do banco de dados:
+
+![Matriz de confusão do SIA com os mesmos comentários avaliados pelo Gemini](images/sia_all_matrix_confusion.png)
+
+Essa matriz demonstrou que a maioria das avaliações foi positiva, com uma quantidade significativa de previsões nas casas vizinhas da diagonal principal. Isso indica que o modelo frequentemente errou por apenas uma diferença de 1 estrela, o que é um ótimo desempenho, especialmente considerando a grande quantidade de comentários no banco de dados (mais de 16 mil).
+
+Se apenas a função `accuracy_score()` tivesse sido utilizada, milhares comentários positivos teriam sido desconsiderados, mesmo com a acurácia subindo para 70%. No entanto, ao aplicar a função `calculate_modified_accuracy()`, a acurácia permaneceu em 90%, refletindo uma avaliação mais justa e precisa da qualidade do modelo.
 
 ---
 
