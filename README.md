@@ -427,11 +427,23 @@ A acurácia, calculada com a função `accuracy_score()`, foi de **69%**. No ent
 
 Segue abaixo matriz de confusão referente a todos os comentários do banco de dados:
 
-![Matriz de confusão do SIA com os mesmos comentários avaliados pelo Gemini](images/sia_all_matrix_confusion.png)
+![Matriz de confusão do SIA com todos os comentários](images/sia_all_matrix_confusion.png)
 
 Essa matriz demonstrou que a maioria das avaliações foi positiva, com uma quantidade significativa de previsões nas casas vizinhas da diagonal principal. Isso indica que o modelo frequentemente errou por apenas uma diferença de 1 estrela, o que é um ótimo desempenho, especialmente considerando a grande quantidade de comentários no banco de dados (mais de 16 mil).
 
 Se apenas a função `accuracy_score()` tivesse sido utilizada, milhares comentários positivos teriam sido desconsiderados, mesmo com a acurácia subindo para 70%. No entanto, ao aplicar a função `calculate_modified_accuracy()`, a acurácia permaneceu em 90%, refletindo uma avaliação mais justa e precisa da qualidade do modelo.
+
+### Análise das Avaliações do Gemini vs SIA
+
+Para comparar os dois métodos, foi elaborada uma quarta matriz de confusão, que analisou as avaliações do Gemini e do SIA lado a lado, considerando a mesma quantidade de comentários. Neste caso, a acurácia não foi calculada, já que nenhum dos métodos reflete os valores reais das avaliações.
+
+A seguir está ilustrada a matriz de confusão que compara ambos os métodos:
+
+![Matriz de confusão de comapração entre o SIA e o Gemini](images/gemini_x_sia_matrix_confusion.png)
+
+Como mostrado na matriz, muitas avaliações positivas coincidiram entre os dois métodos. No entanto, uma quantidade considerável de avaliações apresentou uma diferença entre 4 e 5 estrelas. Esse desvio ainda seria levado em conta na análise deste projeto, já que ambos os valores indicam uma diferença de uma estrela apenas. É importante ressaltar que esta matriz foi criada com o objetivo de oferecer uma comparação gráfica direta entre os métodos e não para representar os valores reais das avaliações.
+
+O código completo, incluíndo a formação das matrizes, pode ser achado neste [arquivo](code_folder/camaroes_gemini_vs_sia.ipynb).
 
 ---
 
