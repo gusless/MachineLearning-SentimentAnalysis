@@ -375,7 +375,7 @@ Uma matriz de confusão é uma ferramenta utilizada para avaliar o desempenho de
 
 A biblioteca `sklearn.metrics` fornece a função `accuracy_score()` para calcular a acurácia de um modelo. Ela considera uma previsão correta apenas quando o modelo acerta exatamente a avaliação original. Por exemplo:
 - Se o Gemini previu 4 estrelas e a avaliação original era 5 estrelas, o `accuracy_score()` classifica essa previsão como incorreta, mesmo estando muito próxima do valor correto.
-- 
+
 Para ajustar a análise e considerar previsões próximas como parcialmente corretas, foi criado o seguinte código:
 
 ```python
@@ -392,6 +392,7 @@ def calculate_modified_accuracy(df, prediction_col, actual_col):
             correct_predictions += 0.8
     return correct_predictions / total_predictions
 ```
+
 Este código foi desenvolvido para calcular uma métrica de acurácia ajustada, que considera previsões próximas ao valor real como parcialmente corretas. O objetivo é oferecer uma avaliação mais flexível e realista do desempenho do modelo, especialmente em casos onde uma previsão exata pode ser difícil, mas a proximidade ainda reflete um bom resultado.
 
 O código recebe como entrada um DataFrame contendo os dados analisados, o nome da coluna com as previsões do modelo (`prediction_col`) e o nome da coluna com os valores reais fornecidos pelos usuários (`actual_col`). Ele percorre cada linha do DataFrame, calcula a diferença absoluta entre a previsão e o valor real e adiciona pontos de acordo com a proximidade. 
@@ -402,21 +403,26 @@ Este método permite uma avaliação mais flexível dos modelos, reconhecendo pr
 
 ### Análise das Avaliações do Gemini
 
-A matriz de confusão do gemini, foi utilizada com apenas uma pequena parte da quantidade de comentários totais do banco de dados retirado do restaurante (300 comentários, de posições aleatorias do arquivo CSV), por causa das limitações da gratuidade da API, e por esta razão a acurácia pode ser menor do que seria caso o tivesse analisado todos os comentarios. 
+A matriz de confusão do Gemini foi gerada utilizando uma amostra de 300 comentários selecionados aleatoriamente do banco de dados coletado do restaurante. Essa abordagem foi necessária devido às limitações do uso gratuito da API, o que impossibilitou a análise de todos os comentários disponíveis. Por conta disso, a acurácia apresentada pode ser inferior ao que seria observado caso todo o conjunto de dados tivesse sido analisado.
 
-A seguir segue a matriz de confusão das avaliações do gemini:
+A matriz de confusão das avaliações do Gemini está ilustrada abaixo:
 
 ![Matriz de confusão do Gemini](images/gemini_matrix_confusion.png)
 
-Sendo assim, foi observado que a maioria dos comentários coletados foram positivos, e o Gemini teve um bom resultado em sua avaliação conseguindo
+A análise revelou que a maioria dos comentários coletados foram positivos. O Gemini demonstrou um desempenho satisfatório, com uma boa correspondência entre suas avaliações e as opiniões reais dos clientes, mesmo com as limitações impostas pela amostragem reduzida.
 
-* Descrever em detalhes os tipos de testes executados. 
-* Descrever os parâmentros avaliados. 
-* Explicar os resultados. 
+A acurácia do Gemini, calculada utilizando a função `accuracy_score()`, foi de 66%. Embora esse valor pareça relativamente baixo, ele não reflete adequadamente a realidade. Por exemplo, um cliente que avaliou o restaurante com 4 estrelas provavelmente teve uma experiência positiva, mas não suficiente para justificar 5 estrelas. Para lidar com isso, foi utilizada a função `calculate_modified_accuracy()`, que atribui um peso um pouco menor para avaliações que chegaram próximas da nota real. Com essa abordagem, a acurácia foi aumentada para 87%, um resultado mais coerente e representativo para este caso específico.
+
+### Análise das Avaliações do SentimentIntensityAnalyzer
+
+Para a avaliação do sia, foram geradas duas matrizes de confusão, uma para a avaliação de todos os comentários do banco de dados, e outra para os mesmos comentarios analizados pelo Gemini, para posteriormente ser feita uma comparação mais adequada entre os dois métodos.
 
 ---
 
 ## Conclusão 
 * O trabalho atendeu aos objetivos? 
-
+- dizer q o sia foi melhor q o gemini nas duas acuracias
+- dizer q nao se sabe ao certo se o gemini pode melhorar, piorar, ultrapassando ou diminuindo a diferença com o sia
+- dizer que os resultados foram satisfatorios, tendo em vista que as acuracias deram perto de 90%
+   
 ---
