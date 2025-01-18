@@ -129,13 +129,87 @@ for score in pol:
 Os resultados finais, contendo as previsões de estrelas para cada comentário, foram salvos no arquivo [CSV](csv_folder/camaroes_sia_stars.csv), para ser analiado posteriormente.
 
 
-## Códigos
-### Treinamento 
+## Outros códigos
+### Etapas de Normalização dos Textos
+
+Abaixo estão as funções utilizadas no processo de normalização dos textos, com breves explicações:
+
+#### Funções Individuais
+1. **converter_minusculo(text)**  
+   - Converte todo o texto para letras minúsculas, garantindo uniformidade.
+```python
+def converter_minusculo(text):
+    return text.lower()
+```
+2. **remove_espaco_branco(text)**  
+   - Remove espaços em branco extras no início e no fim do texto.
+```python
+def remove_espaco_branco(text):
+    return text.strip()
+```
+3. **remove_pontuacao(text)**  
+   - Remove pontuações do texto, exceto apóstrofos, para reduzir ruídos.
+```python
+def remove_pontuacao(text):
+    punct_str = string.punctuation
+    punct_str = punct_str.replace("'", "")
+    translator = str.maketrans("", "", punct_str)
+    return text.translate(translator)
+```
+4. **remove_emoji(text)**  
+   - Remove emojis usando um padrão Unicode, deixando o texto mais limpo.
+```python
+def remove_emoji(text):
+    emoji_pattern = re.compile("["
+        u"\U0001F600-\U0001F64F"
+        u"\U0001F300-\U0001F5FF"
+        u"\U0001F680-\U0001F6FF"
+        u"\U0001F1E0-\U0001F1FF"
+        u"\U00002702-\U000027B0"
+        u"\U000024C2-\U0001F251"
+        "]+", flags=re.UNICODE)
+    return emoji_pattern.sub(r"", text)
+```
+5. **remove_http(text)**  
+   - Remove URLs presentes no texto utilizando expressões regulares.
+```python
+def remove_http(text):
+    http = r"https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)"
+    pattern = re.compile(http, re.IGNORECASE)
+    return pattern.sub("", text)
+```
+6. **remove_stopwords(text)**  
+   - Remove palavras comuns sem significado relevante (stopwords) em várias línguas.
+```python
+regexp = RegexpTokenizer(r"\b\w+\b")
+linguas = ['portuguese', 'english', 'spanish', 'french']
+stops = []
+for lingua in linguas:
+    stops += nltk.corpus.stopwords.words(lingua)
+def remove_stopwords(text):
+    return " ".join([word for word in regexp.tokenize(text) if word not in stops])
+```
+7. **text_normalizer(text)**  
+   - Combina todas as funções acima em uma única sequência de normalização:  
+     1. Remove acentos (`unidecode`).  
+     2. Remove quebras de linha (`\n`).  
+     3. Remove URLs, emojis, pontuações e espaços extras.  
+     4. Converte para minúsculas.  
+     5. Remove stopwords.
+```python
+def text_normalizer(text):
+    text = unidecode.unidecode(text)
+    text = re.sub('\n', '', text)
+    text = remove_http(text)
+    text = remove_emoji(text)
+    text = remove_pontuacao(text)
+    text = remove_espaco_branco(text)
+    text = converter_minusculo(text)
+    text = remove_stopwords(text)
+    return text
+```
 ### Tratamento do resultado do treinamento
 
-```python
-
-```
 
 
 * Mostrar trechos de códigos mais importantes e explicações.
