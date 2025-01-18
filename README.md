@@ -447,10 +447,16 @@ O código completo, incluíndo a formação das matrizes, pode ser achado neste 
 
 ---
 
-## Conclusão 
-* O trabalho atendeu aos objetivos? 
-- dizer q o sia foi melhor q o gemini nas duas acuracias
-- dizer q nao se sabe ao certo se o gemini pode melhorar, piorar, ultrapassando ou diminuindo a diferença com o sia
-- dizer que os resultados foram satisfatorios, tendo em vista que as acuracias deram perto de 90%
+## Conclusão
+
+A análise realizada neste projeto comparou dois métodos diferentes de avaliação de sentimentos: o Gemini e o SentimentIntensityAnalyzer. Cada método foi avaliado por meio de métricas objetivas, incluindo matrizes de confusão e cálculos de acurácia, além de análises gráficas das diferenças e semelhanças entre as avaliações.
+
+O Gemini apresentou uma acurácia inicial de **66%** utilizando a métrica `accuracy_score()` e melhorou para **87%** quando avaliado com a função personalizada `calculate_modified_accuracy()`. Já o **SIA** demonstrou um desempenho ligeiramente superior, com uma acurácia de **69%** utilizando `accuracy_score()` e atingindo **90%** com a métrica personalizada. Essa diferença mostra que o SIA teve uma performance mais consistente, mesmo analisando uma quantidade significativamente maior de dados.
+
+Ao comparar os dois métodos diretamente, foi constatado que ambos tendem a classificar a maioria dos comentários como positivos. No entanto, divergências em torno de avaliações de 4 e 5 estrelas foram frequentes, destacando diferenças na sensibilidade de cada método. Apesar dessas diferenças, ambos mostraram resultados satisfatórios na análise de sentimentos, sendo capazes de identificar avaliações positivas, negativas e neutras de forma coerente.
+
+A utilização da métrica personalizada de acurácia se mostrou essencial para avaliar de forma mais justa os métodos analisados. Ao considerar como parciais as avaliações com diferença de até uma estrela, foi possível capturar um desempenho mais próximo da realidade, evitando penalizações injustas a modelos que, apesar de não serem completamente precisos, ainda geram insights valiosos.
+
+Por fim, o projeto demonstrou a viabilidade de aplicar métodos de processamento de linguagem natural na análise de sentimentos de avaliações de clientes. Ambos os modelos forneceram uma boa base para a análise, mas o SIA apresentou um leve destaque, especialmente pela sua eficiência ao lidar com um volume maior de dados. Porém, não é sabido se o Gemini apresentaria um resultado superior ao SIA, ou se diminuiria sua acurácia, caso tivesse analisado todas os comentários. Portanto, embora não tenha sido possível determinar um modelo ideal, o SIA se destaca como uma escolha prática e confiável, especialmente por não possuir as limitações de uso impostas pelo Gemini. Dessa forma, para cenários onde a escalabilidade e a análise de grandes volumes de dados são fundamentais, o SIA se mostra uma opção mais viável.
    
 ---
