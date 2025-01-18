@@ -3,36 +3,43 @@
 ## Introdução 
 
 ### Identificação 
+
 * Augusto César da Silva Carvalho, 20230029867
 * Rita de Cassia Melo Nascimento, 20210017617
 
 ---
 
 ### Objetivo
+
 A base de dados contém informações sobre as avaliações feitas por usuários acerca do restaurante *Camarões* na plataforma *TripAdvisor*, com o objetivo de analisar os sentimentos e as tendências de satisfação. A base será utilizada para o treinamento de modelos de machine learning para previsão de avaliações, contribuindo para a compreensão do comportamento dos consumidores e para a tomada de decisões estratégicas.
 
 #### Fonte dos Dados
+
 - **Plataforma**: TripAdvisor
 - **Data de Coleta**: Dados coletados até o mês de dezembro de 2024.
 
 ### Estrutura dos Dados
-A base de dados é composta por um arquivo no formato **CSV**, com as seguintes colunas:
+
+A base de dados é composta por um [arquivo](csv_folder/camaroes.csv) no formato CSV, com as seguintes colunas:
 
 - **Título**: Título da avaliação feita pelo usuário.
 - **Comentário**: Texto completo do comentário da avaliação.
 - **Avaliação**: Nota atribuída em uma escala de 1 a 5.
 
 #### Tamanho da Base de Dados
+
 - **Número de Avaliações**: 16.387 avaliações.
 - **Número de Colunas**: 3 (Título, Comentário e Avaliação).
 
 #### Pré-processamento
+
 Os dados foram tratados para ficarem legíveis para os modelos de machine learning. As seguintes transformações foram realizadas:
 
 - **Retirada de Acentos, Emojis e Espaços em Branco**: Os elementos foram removidos para garantir consistência nos dados textuais.
 - **Remoção de Stopwords**: Stopwords (palavras comuns e sem significado relevante, como "a", "de", "o", etc.) foram removidas dos comentários.
 
 #### Métodos Utilizados
+
 - **Gemini API**
   
 Para a análise de sentimentos e previsão das avaliações, foram utilizados os modelos **SIA** (Sentiment Intensity Analyzer) e **Gemini**.
@@ -66,13 +73,16 @@ O **SIA** é simples de usar e é eficaz para analisar sentimentos em textos cur
 | "Recomendo a todos!"         | "Comida excelente, ambiente agradável e ótimo atendimento. Recomendo a todos!" | 4        |
 
 #### Limitações
+
 - **Representatividade**: A base contém apenas avaliações de um único restaurante, o que pode limitar a generalização dos resultados para outros estabelecimentos.
 - **Possíveis viéses**: A maioria das avaliações podem ser de clientes altamente satisfeitos ou insatisfeitos, o que pode afetar a distribuição das avaliações.
 
 ---
 
-## Metodologia   
+## Metodologia  
+
 ### SentimentIntensityAnalyzer
+
 A técnica de *machine learning* utilizada neste projeto foi o Processamento de Linguagem Natural (Natural Language Processing - NLP). Essa área da inteligência artificial é voltada para a interação entre humanos e máquinas por meio da linguagem natural. O NLP permite que computadores processem, analisem e interpretem textos ou falas humanas, identificando padrões e extraindo informações relevantes.  
 
 A aplicação específica foi a análise de sentimentos, uma abordagem que utiliza modelos de NLP para classificar emoções ou opiniões expressas em textos, como positivas, negativas ou neutras. Para este estudo, os dados analisados foram os comentários de avaliação do restaurante Camarões.
@@ -180,25 +190,34 @@ O código completo pode ser encontrado [aqui](code_folder/camaroes_gemini.ipynb)
 
 ---
 
-## Outros códigos
-### Etapas de Normalização dos Textos
+### Outros códigos
+
+#### Etapas de Normalização dos Textos
 
 Abaixo estão as funções utilizadas no processo de normalização dos textos, com breves explicações:
 
-1. **converter_minusculo(text)**  
+1. **converter_minusculo(text)**
+   
    - Converte todo o texto para letras minúsculas, garantindo uniformidade.
+     
 ```python
 def converter_minusculo(text):
     return text.lower()
 ```
-2. **remove_espaco_branco(text)**  
+
+2. **remove_espaco_branco(text)**
+   
    - Remove espaços em branco extras no início e no fim do texto.
+     
 ```python
 def remove_espaco_branco(text):
     return text.strip()
 ```
-3. **remove_pontuacao(text)**  
+
+3. **remove_pontuacao(text)**
+   
    - Remove pontuações do texto, exceto apóstrofos, para reduzir ruídos.
+     
 ```python
 def remove_pontuacao(text):
     punct_str = string.punctuation
@@ -206,8 +225,11 @@ def remove_pontuacao(text):
     translator = str.maketrans("", "", punct_str)
     return text.translate(translator)
 ```
-4. **remove_emoji(text)**  
+
+4. **remove_emoji(text)**
+   
    - Remove emojis usando um padrão Unicode, deixando o texto mais limpo.
+     
 ```python
 def remove_emoji(text):
     emoji_pattern = re.compile("["
@@ -220,16 +242,22 @@ def remove_emoji(text):
         "]+", flags=re.UNICODE)
     return emoji_pattern.sub(r"", text)
 ```
-5. **remove_http(text)**  
+
+5. **remove_http(text)**
+   
    - Remove URLs presentes no texto utilizando expressões regulares.
+     
 ```python
 def remove_http(text):
     http = r"https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)"
     pattern = re.compile(http, re.IGNORECASE)
     return pattern.sub("", text)
 ```
-6. **remove_stopwords(text)**  
-   - Remove palavras comuns sem relevância semântica (stopwords), como "de", "o", "a", foram excluídas.  
+
+6. **remove_stopwords(text)**
+   
+   - Remove palavras comuns sem relevância semântica (stopwords), como "de", "o", "a", foram excluídas.
+     
 ```python
 regexp = RegexpTokenizer(r"\b\w+\b")
 linguas = ['portuguese', 'english', 'spanish', 'french']
@@ -239,8 +267,11 @@ for lingua in linguas:
 def remove_stopwords(text):
     return " ".join([word for word in regexp.tokenize(text) if word not in stops])
 ```
-7. **text_normalizer(text)**  
-   - Combina todas as funções acima em uma única sequência de normalização:  
+
+7. **text_normalizer(text)**
+   
+   - Combina todas as funções acima em uma única sequência de normalização:
+     
 ```python
 def text_normalizer(text):
     text = unidecode.unidecode(text)
@@ -253,13 +284,16 @@ def text_normalizer(text):
     text = remove_stopwords(text)
     return text
 ```
+
 O código completo pode ser achado neste [arquivo](code_folder/camaroes_sentiment.py).
 
-### Etapas para Atualização das Avaliações do Gemini
+#### Etapas para Atualização das Avaliações do Gemini
 
 Este código atualiza um arquivo CSV com avaliações processadas pela API Gemini, evitando duplicações e garantindo organização. Abaixo está a explicação de cada bloco:
 
-#### 1. Conversão Segura de Valores
+1. **Conversão Segura de Valores**
+
+  - Função para tentar converter valores em `int` ou `float`. Caso a conversão falhe, retorna o valor original.
 
 ```python
 def safe_convert(value):
@@ -272,10 +306,12 @@ def safe_convert(value):
             return value
 ```
 
-- Função para tentar converter valores em `int` ou `float`. Caso a conversão falhe, retorna o valor original.
-
-#### 2. Leitura do Arquivo CSV
-
+2. **Leitura do Arquivo CSV**
+   
+  - Lê o arquivo CSV especificado no caminho.
+  - Converte os valores usando a função `safe_convert`.
+  - Ignora o cabeçalho. Se o arquivo não existir, inicia com uma lista vazia.
+    
 ```python
 listarquivo = []
 try:
@@ -287,11 +323,12 @@ except FileNotFoundError:
     listarquivo = []
 ```
 
-- Lê o arquivo CSV especificado no caminho.
-- Converte os valores usando a função `safe_convert`.
-- Ignora o cabeçalho. Se o arquivo não existir, inicia com uma lista vazia.
+3. **Tratamento e Filtragem de Valores no Arquivo**
 
-#### 3. Tratamento e Filtragem de Valores no Arquivo
+  - Garante que os valores no arquivo sejam convertidos para números (`int` ou `float`), sempre que possível.
+  - Extrai os números dos comentários existentes no arquivo para evitar duplicações.
+  - Converte os novos dados (`gemilist`) e filtra os comentários que já existem no arquivo.
+  - Adiciona ao arquivo somente os dados filtrados que não estavam presentes anteriormente.
 
 ```python
 listarquivo = [[int(x) if isinstance(x, str) and x.isdigit() else float(x) if isinstance(x, str) and x.replace('.', '', 1).isdigit() else x for x in row] for row in listarquivo]
@@ -303,13 +340,12 @@ if gemilist_filtered:
         writer = csv.writer(arquivo)
         writer.writerows(gemilist_filtered)
 ```
-- Garante que os valores no arquivo sejam convertidos para números (`int` ou `float`), sempre que possível.
-- Extrai os números dos comentários existentes no arquivo para evitar duplicações.
-- Converte os novos dados (`gemilist`) e filtra os comentários que já existem no arquivo.
-- Adiciona ao arquivo somente os dados filtrados que não estavam presentes anteriormente.
 
-#### 4. Ordenação dos Dados e Regravação do Arquivo com Cabeçalho
+4. **Ordenação dos Dados e Regravação do Arquivo com Cabeçalho**
 
+  - Recarrega o arquivo atualizado e ordena os dados pelo número do comentário em ordem crescente.
+  - Reescreve o arquivo, adicionando o cabeçalho e os dados ordenados.
+  
 ```python
 try:
     with open(caminho, "r") as arquivo:
@@ -327,13 +363,52 @@ with open(caminho, "w", newline='') as arquivo:
     writer.writerows(dados)
 ```
 
-- Recarrega o arquivo atualizado e ordena os dados pelo número do comentário em ordem crescente.
-- Reescreve o arquivo, adicionando o cabeçalho e os dados ordenados.
+O código completo pode ser achado neste [arquivo](code_folder/camaroes_gemini.ipynb).
 
 ---
 
 ## Resultados
 
+Após a obtenção dos dois arquivos CSV, foi realizada uma análise para avaliar a precisão das previsões feitas pelo Gemini e pelo SentimentIntensityAnalyzer (SIA). Para isso, foram construídas matrizes de confusão comparando as previsões de cada método com as avaliações reais dos clientes. Em seguida, foi calculada a acurácia de cada modelo de avaliação.
+
+Uma matriz de confusão é uma ferramenta utilizada para avaliar o desempenho de modelos de classificação. Ela mostra a relação entre os valores previstos e os valores reais, e neste projeto ela foi lida considerando a diagonal principal como previsões corretas, e as casas vizinhas a diagonal principal como "meio-certas". Sendo assim foi possível identificar como o modelo está acertando ou errando em cada categoria.
+
+A biblioteca `sklearn.metrics` fornece a função `accuracy_score()` para calcular a acurácia de um modelo. Ela considera uma previsão correta apenas quando o modelo acerta exatamente a avaliação original. Por exemplo:
+- Se o Gemini previu 4 estrelas e a avaliação original era 5 estrelas, o `accuracy_score()` classifica essa previsão como incorreta, mesmo estando muito próxima do valor correto.
+- 
+Para ajustar a análise e considerar previsões próximas como parcialmente corretas, foi criado o seguinte código:
+
+```python
+def calculate_modified_accuracy(df, prediction_col, actual_col):
+    correct_predictions = 0
+    total_predictions = len(df)
+
+    for index, row in df.iterrows():
+        predicted_stars = row[prediction_col]
+        actual_stars = row[actual_col]
+        if abs(predicted_stars - actual_stars) == 0:
+            correct_predictions += 1
+        if abs(predicted_stars - actual_stars) == 1:
+            correct_predictions += 0.8
+    return correct_predictions / total_predictions
+```
+Este código foi desenvolvido para calcular uma métrica de acurácia ajustada, que considera previsões próximas ao valor real como parcialmente corretas. O objetivo é oferecer uma avaliação mais flexível e realista do desempenho do modelo, especialmente em casos onde uma previsão exata pode ser difícil, mas a proximidade ainda reflete um bom resultado.
+
+O código recebe como entrada um DataFrame contendo os dados analisados, o nome da coluna com as previsões do modelo (`prediction_col`) e o nome da coluna com os valores reais fornecidos pelos usuários (`actual_col`). Ele percorre cada linha do DataFrame, calcula a diferença absoluta entre a previsão e o valor real e adiciona pontos de acordo com a proximidade. 
+
+Se a previsão for exata (diferença igual a 0), ela é considerada totalmente correta e soma 1 ponto à contagem. Caso a previsão esteja próxima (diferença de 1), ela ainda é considerada parcialmente correta, somando 0.8 pontos. Ao final do processo, o total de pontos acumulados é dividido pelo número total de previsões para calcular a acurácia modificada.
+
+Este método permite uma avaliação mais flexível dos modelos, reconhecendo previsões próximas como parcialmente corretas. Isso ajuda a medir o desempenho de forma mais justa, especialmente em contextos onde uma previsão aproximada ainda é útil.
+
+### Análise das Avaliações do Gemini
+
+A matriz de confusão do gemini, foi utilizada com apenas uma pequena parte da quantidade de comentários totais do banco de dados retirado do restaurante (300 comentários, de posições aleatorias do arquivo CSV), por causa das limitações da gratuidade da API, e por esta razão a acurácia pode ser menor do que seria caso o tivesse analisado todos os comentarios. 
+
+A seguir segue a matriz de confusão das avaliações do gemini:
+
+![Matriz de confusão do Gemini](images/gemini_matrix_confusion.png)
+
+Sendo assim, foi observado que a maioria dos comentários coletados foram positivos, e o Gemini teve um bom resultado em sua avaliação conseguindo
 
 * Descrever em detalhes os tipos de testes executados. 
 * Descrever os parâmentros avaliados. 
