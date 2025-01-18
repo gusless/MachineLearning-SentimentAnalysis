@@ -15,6 +15,16 @@ import re
 import unidecode
 import nltk
 from nltk.tokenize import word_tokenize, RegexpTokenizer
+nltk.download('vader_lexicon')
+from nltk.sentiment import SentimentIntensityAnalyzer
+#from translate import Translator
+from googletrans import Translator
+import tqdm
+import time
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+import matplotlib.pyplot as plt
+import csv
 
 nltk.download('stopwords')
 
@@ -85,17 +95,6 @@ data["Estrelas"] = df["Estrelas"]
 data.head()
 
 """# Análise de sentimentos"""
-
-nltk.download('vader_lexicon')
-
-from nltk.sentiment import SentimentIntensityAnalyzer
-#from translate import Translator
-from googletrans import Translator
-import tqdm
-import time
-from sklearn.metrics import confusion_matrix
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 sia = SentimentIntensityAnalyzer()
 
@@ -192,19 +191,6 @@ def classificar_estrelas(estrelas):
 data['classificacao_estrelas'] = data['Estrelas'].apply(classificar_estrelas)
 
 data['polaridade'] = polarity
-
-cm = confusion_matrix(data['classificacao_estrelas'], data['polaridade'])
-
-plt.figure(figsize=(8, 6))
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
-            xticklabels=['Negativo', 'Neutro', 'Positivo'],
-            yticklabels=['Negativo', 'Neutro', 'Positivo'])
-plt.xlabel('Polaridade Predita')
-plt.ylabel('Classificação por Estrelas')
-plt.title('Matriz de Confusão')
-plt.show()
-
-import csv
 
 with open('C:\\Users\\Gusto\\Desktop\\projects\\ml-sentiment_analysis\\camaroes_sia_stars.csv', 'w', newline='', encoding='utf-8') as csvfile:
     writer = csv.writer(csvfile)
