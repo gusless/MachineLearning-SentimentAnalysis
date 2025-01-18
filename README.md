@@ -13,58 +13,11 @@
 
 A base de dados contém informações sobre as avaliações feitas por usuários acerca do restaurante *Camarões* na plataforma *TripAdvisor*, com o objetivo de analisar os sentimentos e as tendências de satisfação. A base será utilizada para o treinamento de modelos de machine learning para previsão de avaliações, contribuindo para a compreensão do comportamento dos consumidores e para a tomada de decisões estratégicas.
 
-#### Fonte dos Dados
+### Fonte dos Dados
 
-- **Plataforma**: TripAdvisor
-- **Data de Coleta**: Dados coletados até o mês de dezembro de 2024.
+Os dados utilizados neste projeto foram extraídos do site TripAdvisor por meio de uma técnica de Web Scraping, que consiste em coletar informações diretamente do HTML do site. Durante a extração, foram capturados os títulos dos comentários (que tiveram pouca relevância na análise), o texto completo dos comentários e suas respectivas avaliações, variando de 1 a 5 estrelas. Os dados foram coletados até o final de dezembro de 2024, de forma que novas avaliações feitas após essa data não estão presentes no banco de dados.
 
-### Estrutura dos Dados
-
-A base de dados é composta por um [arquivo](csv_folder/camaroes.csv) no formato CSV, com as seguintes colunas:
-
-- **Título**: Título da avaliação feita pelo usuário.
-- **Comentário**: Texto completo do comentário da avaliação.
-- **Avaliação**: Nota atribuída em uma escala de 1 a 5.
-
-#### Tamanho da Base de Dados
-
-- **Número de Avaliações**: 16.387 avaliações.
-- **Número de Colunas**: 3 (Título, Comentário e Avaliação).
-
-#### Pré-processamento
-
-Os dados foram tratados para ficarem legíveis para os modelos de machine learning. As seguintes transformações foram realizadas:
-
-- **Retirada de Acentos, Emojis e Espaços em Branco**: Os elementos foram removidos para garantir consistência nos dados textuais.
-- **Remoção de Stopwords**: Stopwords (palavras comuns e sem significado relevante, como "a", "de", "o", etc.) foram removidas dos comentários.
-
-#### Métodos Utilizados
-
-- **Gemini API**
-  
-Para a análise de sentimentos e previsão das avaliações, foram utilizados os modelos **SIA** (Sentiment Intensity Analyzer) e **Gemini**.
-
-A API do Gemini é uma interface de programação de aplicativos (API) que permite integrar as funcionalidades da plataforma Gemini, desenvolvida pela Google, em aplicativos Python. A API é projetada para realizar tarefas de processamento de linguagem natural (PLN), como análise de sentimentos, reconhecimento de entidades, tradução de texto, análise de emoções, entre outras.
-
-A API do Gemini geralmente oferece acesso a diversos modelos treinados para lidar com textos em várias línguas e realizar tarefas complexas de PLN. É importante destacar que, enquanto o Gemini como um produto é amplamente acessado via interfaces gráficas, a API permite automação e integração em sistemas personalizados.
-
-Usando a API para Análise de Sentimentos: A API do Gemini pode ser usada para análise de sentimentos e outras tarefas relacionadas. Você pode usar a API para analisar texto, identificar sentimentos, emoções, ou realizar outras tarefas de PLN. O processo de uso típico envolve enviar uma solicitação com texto para a API e obter a resposta de volta.
-
-
-
-- **SentimentIntensityAnalyzer**
-
-O **SentimentIntensityAnalyzer (SIA)** é uma ferramenta da biblioteca **NLTK** (Natural Language Toolkit) utilizada para análise de sentimentos. Ela avalia o texto e gera pontuações que indicam a polaridade e a intensidade emocional do conteúdo. O SIA utiliza um modelo baseado em léxico, que analisa a frequência de palavras associadas a sentimentos positivos, negativos ou neutros.
-
-O SIA gera quatro pontuações principais:
-1. **Positivo (pos)**: Quão positivo o texto é.
-2. **Negativo (neg)**: Quão negativo o texto é.
-3. **Neutro (neu)**: Quão neutro o texto é.
-4. **Compound**: Uma pontuação agregada que reflete o sentimento geral do texto, variando de -1 (extremamente negativo) a +1 (extremamente positivo).
-
-O **SIA** é simples de usar e é eficaz para analisar sentimentos em textos curtos, como resenhas de produtos ou posts em redes sociais. Contudo, pode ter limitações em textos mais complexos, com sarcasmo ou ambiguidade.
-
-#### Exemplo de Dados
+Abaixo, segue um exemplo do formato do banco de dados utilizado:
 
 | Título                      | Comentário                                                   | Estrelas |
 |-----------------------------|--------------------------------------------------------------|----------|
@@ -72,10 +25,36 @@ O **SIA** é simples de usar e é eficaz para analisar sentimentos em textos cur
 | "Decepção com o serviço"     | "A comida estava boa, mas o atendimento foi muito demorado. Não voltarei tão cedo." | 2        |
 | "Recomendo a todos!"         | "Comida excelente, ambiente agradável e ótimo atendimento. Recomendo a todos!" | 4        |
 
+O resultado dessa coleta foi consolidado em um arquivo [CSV](csv_folder/camaroes.csv) contendo **16.387 avaliações**, utilizado posteriormente para as análises realizadas neste projeto. O código responsável pelo Web Scraping pode ser encontrado neste [arquivo](code_folder/camaroes_webscraping.ipynb).
+
 #### Limitações
 
 - **Representatividade**: A base contém apenas avaliações de um único restaurante, o que pode limitar a generalização dos resultados para outros estabelecimentos.
 - **Possíveis viéses**: A maioria das avaliações podem ser de clientes altamente satisfeitos ou insatisfeitos, o que pode afetar a distribuição das avaliações.
+
+### Métodos Utilizados
+
+Para a análise de sentimentos e previsão das avaliações, foram utilizados os modelos **SIA** (Sentiment Intensity Analyzer) e **Gemini**.
+
+#### Gemini API
+
+A **Gemini API** é uma interface desenvolvida pela Google que permite integrar funcionalidades avançadas de processamento de linguagem natural (PLN) diretamente em aplicações Python. Esta API é projetada para realizar tarefas como análise de sentimentos, reconhecimento de entidades, tradução de texto e detecção de emoções, entre outras.
+
+No contexto deste projeto, a API do Gemini foi usada para análise de sentimentos e previsão de avaliações de clientes. Ela oferece acesso a modelos robustos treinados para lidar com textos em diversas línguas e realizar tarefas complexas de PLN. Embora a plataforma Gemini seja comumente utilizada por meio de interfaces gráficas, a API permite automação e integração em sistemas personalizados, aumentando a eficiência e a escalabilidade.
+
+O processo típico de uso envolve enviar uma solicitação com o texto a ser analisado e receber como resposta uma análise detalhada. No caso deste projeto, as avaliações foram processadas em lotes pequenos devido às limitações de uso gratuito da API, o que impactou o volume total de dados analisados.
+
+#### SentimentIntensityAnalyzer
+
+O **SentimentIntensityAnalyzer (SIA)** é uma ferramenta da biblioteca **NLTK** (Natural Language Toolkit) voltada para a análise de sentimentos. Ele avalia o texto e gera pontuações que indicam a polaridade e a intensidade emocional do conteúdo, utilizando um modelo baseado em léxico.
+
+O SIA gera quatro pontuações principais:
+1. **Positivo (pos)**: Quão positivo o texto é.
+2. **Negativo (neg)**: Quão negativo o texto é.
+3. **Neutro (neu)**: Quão neutro o texto é.
+4. **Compound**: Uma pontuação agregada que reflete o sentimento geral do texto, variando de -1 (extremamente negativo) a +1 (extremamente positivo).
+
+A ferramenta é especialmente eficaz para analisar textos curtos, como resenhas ou comentários em redes sociais, oferecendo uma solução prática e rápida. Contudo, pode apresentar limitações em casos de textos mais longos, ambíguos ou que contenham sarcasmo.
 
 ---
 
