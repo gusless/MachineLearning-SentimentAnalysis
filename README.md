@@ -121,7 +121,11 @@ for score in pol:
     else:
         sia_stars.append(3)  # Neutro
 ```
-Os resultados finais, contendo as previsões de estrelas para cada comentário, foram salvos no arquivo [CSV](csv_folder/camaroes_sia_stars.csv), para ser analiado posteriormente.
+Os resultados finais, contendo as previsões de estrelas para cada comentário, foram salvos no arquivo [CSV](csv_folder/camaroes_sia_stars.csv), para ser analiado posteriormente. E o link do código pode ser encontrado [aqui](code_folder/camaroes_sentiment.py)
+
+### Gemini API
+
+
 
 ---
 
@@ -207,8 +211,6 @@ def text_normalizer(text):
 * Descrever em detalhes os tipos de testes executados. 
 * Descrever os parâmentros avaliados. 
 * Explicar os resultados. 
-*
-
 
 ## Conclusão 
 * O trabalho atendeu aos objetivos? 
