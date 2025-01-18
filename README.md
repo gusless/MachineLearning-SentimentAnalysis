@@ -2,6 +2,8 @@
 
 ## Introdução 
 
+Este projeto tem como objetivo explorar a aplicação de técnicas de processamento de linguagem natural (PLN) na análise de sentimentos de avaliações de clientes de um restaurante. Para isso, foram utilizadas duas abordagens principais: a API Gemini, uma solução avançada baseada em modelos de aprendizado de máquina, e o SentimentIntensityAnalyzer (SIA), uma ferramenta da biblioteca NLTK.
+
 ### Identificação 
 
 * Augusto César da Silva Carvalho, 20230029867
@@ -9,11 +11,11 @@
 
 ---
 
-### Objetivo
+## Objetivo
 
 A base de dados contém informações sobre as avaliações feitas por usuários acerca do restaurante *Camarões* na plataforma *TripAdvisor*, com o objetivo de analisar os sentimentos e as tendências de satisfação. A base será utilizada para o treinamento de modelos de machine learning para previsão de avaliações, contribuindo para a compreensão do comportamento dos consumidores e para a tomada de decisões estratégicas.
 
-### Fonte dos Dados
+## Fonte dos Dados
 
 Os dados utilizados neste projeto foram extraídos do site TripAdvisor por meio de uma técnica de Web Scraping, que consiste em coletar informações diretamente do HTML do site. Durante a extração, foram capturados os títulos dos comentários (que tiveram pouca relevância na análise), o texto completo dos comentários e suas respectivas avaliações, variando de 1 a 5 estrelas. Os dados foram coletados até o final de dezembro de 2024, de forma que novas avaliações feitas após essa data não estão presentes no banco de dados.
 
@@ -27,16 +29,16 @@ Abaixo, segue um exemplo do formato do banco de dados utilizado:
 
 O resultado dessa coleta foi consolidado em um arquivo [CSV](csv_folder/camaroes.csv) contendo **16.387 avaliações**, utilizado posteriormente para as análises realizadas neste projeto. O código responsável pelo Web Scraping pode ser encontrado neste [arquivo](code_folder/camaroes_webscraping.ipynb).
 
-#### Limitações
+### Limitações
 
 - **Representatividade**: A base contém apenas avaliações de um único restaurante, o que pode limitar a generalização dos resultados para outros estabelecimentos.
 - **Possíveis viéses**: A maioria das avaliações podem ser de clientes altamente satisfeitos ou insatisfeitos, o que pode afetar a distribuição das avaliações.
 
-### Métodos Utilizados
+## Métodos Utilizados
 
 Para a análise de sentimentos e previsão das avaliações, foram utilizados os modelos **SIA** (Sentiment Intensity Analyzer) e **Gemini**.
 
-#### Gemini API
+### Gemini API
 
 A **Gemini API** é uma interface desenvolvida pela Google que permite integrar funcionalidades avançadas de processamento de linguagem natural (PLN) diretamente em aplicações Python. Esta API é projetada para realizar tarefas como análise de sentimentos, reconhecimento de entidades, tradução de texto e detecção de emoções, entre outras.
 
@@ -44,7 +46,7 @@ No contexto deste projeto, a API do Gemini foi usada para análise de sentimento
 
 O processo típico de uso envolve enviar uma solicitação com o texto a ser analisado e receber como resposta uma análise detalhada. No caso deste projeto, as avaliações foram processadas em lotes pequenos devido às limitações de uso gratuito da API, o que impactou o volume total de dados analisados.
 
-#### SentimentIntensityAnalyzer
+### SentimentIntensityAnalyzer
 
 O **SentimentIntensityAnalyzer (SIA)** é uma ferramenta da biblioteca **NLTK** (Natural Language Toolkit) voltada para a análise de sentimentos. Ele avalia o texto e gera pontuações que indicam a polaridade e a intensidade emocional do conteúdo, utilizando um modelo baseado em léxico.
 
