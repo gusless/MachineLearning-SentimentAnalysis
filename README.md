@@ -191,11 +191,6 @@ def remove_stopwords(text):
 ```
 7. **text_normalizer(text)**  
    - Combina todas as funções acima em uma única sequência de normalização:  
-     1. Remove acentos (`unidecode`).  
-     2. Remove quebras de linha (`\n`).  
-     3. Remove URLs, emojis, pontuações e espaços extras.  
-     4. Converte para minúsculas.  
-     5. Remove stopwords.
 ```python
 def text_normalizer(text):
     text = unidecode.unidecode(text)
