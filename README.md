@@ -79,7 +79,7 @@ A técnica de *machine learning* utilizada neste projeto foi o Processamento de 
 
 A aplicação específica foi a análise de sentimentos, uma abordagem que utiliza modelos de NLP para classificar emoções ou opiniões expressas em textos, como positivas, negativas ou neutras. Para este estudo, os dados analisados foram os comentários de avaliação do restaurante Camarões.
 
-O primeiro passo foi o tratamento dos dados textuais, deixando os comentários normalizados para facilitar a interpretação pelo modelo **SIA (SentimentIntensityAnalyzer)**. Os processos de normalização incluíram:  
+O primeiro passo foi o [tratamento dos dados textuais](#Etapas de Normalização dos Textos), deixando os comentários normalizados para facilitar a interpretação pelo modelo **SIA (SentimentIntensityAnalyzer)**. Os processos de normalização incluíram:  
 - **Remoção de acentos e caracteres especiais**: Garantiu uniformidade no texto.  
 - **Padronização de caixa (lowercase)**: Todos os textos foram convertidos para letras minúsculas.  
 - **Remoção de stopwords**: Palavras sem relevância semântica, como "de", "o", "a", foram excluídas.  
@@ -134,7 +134,6 @@ Os resultados finais, contendo as previsões de estrelas para cada comentário, 
 
 Abaixo estão as funções utilizadas no processo de normalização dos textos, com breves explicações:
 
-#### Funções Individuais
 1. **converter_minusculo(text)**  
    - Converte todo o texto para letras minúsculas, garantindo uniformidade.
 ```python
