@@ -1,4 +1,4 @@
-# Análise de sentimentos de um restaurante utilizando NLP
+# Análise de Sentimentos de um Restaurante Utilizando NLP
 
 ## Introdução 
 
@@ -43,8 +43,7 @@ A API do Gemini geralmente oferece acesso a diversos modelos treinados para lida
 
 Usando a API para Análise de Sentimentos: A API do Gemini pode ser usada para análise de sentimentos e outras tarefas relacionadas. Você pode usar a API para analisar texto, identificar sentimentos, emoções, ou realizar outras tarefas de PLN. O processo de uso típico envolve enviar uma solicitação com texto para a API e obter a resposta de volta.
 
-A API do Gemini pode exigir um plano de pagamento dependendo do volume de uso, já que muitas APIs de Google Cloud têm limites gratuitos, mas cobram por uso além desses limites.
-Durante o desenvolvimento do projeto, para contornar a limitação de uso da API do Gemini, decidimos selecionar uma **quantidade pequena de comentários** para análise em cada execução, de forma a evitar exceder os limites gratuitos da API. As análises de sentimentos eram realizadas apenas sobre um subconjunto de comentários, e os resultados eram **salvos em um arquivo CSV**, onde as avaliações eram constantemente adicionadas, permitindo o acompanhamento contínuo sem ultrapassar os custos associados ao uso excessivo da API. Essa estratégia ajudou a minimizar os gastos, mas não resolveu completamente o problema da limitação de volume de requisições, pois ainda assim era necessário aguardar um tempo para fazer outra requisição. 
+
 
 - **SentimentIntensityAnalyzer**
 
@@ -121,12 +120,49 @@ for score in pol:
     else:
         sia_stars.append(3)  # Neutro
 ```
-Os resultados finais, contendo as previsões de estrelas para cada comentário, foram salvos no arquivo [CSV](csv_folder/camaroes_sia_stars.csv), para ser analiado posteriormente. E o link do código pode ser encontrado [aqui](code_folder/camaroes_sentiment.py)
+Os resultados finais, contendo as previsões de estrelas para cada comentário, foram salvos no arquivo [CSV](csv_folder/camaroes_sia_stars.csv), para ser analiado posteriormente. E o código completo pode ser encontrado [aqui](code_folder/camaroes_sentiment.py)
 
 ### Gemini API
 
+A API do Gemini permite utilizar a inteligencia artificial da mesma forma que na sua plataforma, com prompts dentro do código, mas também é possível utiliza-la para ler variáveis de textos, automatizar prompts, entre outras funções. 
 
+Porém, esta API exige um plano de pagamento dependendo do volume de uso, mas possui um limite de uso gratuito que é restabelecido após algumas horas. 
+Para contornar essa limitação, foi selecionada um pequena de intervalo de comentários (50 no máximo) escolhido pelo usuário para análise em cada execução, de forma a evitar exceder os limites gratuitos da API.
+```python
+print(f"Escolha um intervalo de 50 comentários, dentre {len(df)} comentários, para o Gemini analisar:")
 
+a = 1
+b = 0
+max = 50
+while int(a)>int(b) or int(a)<0 or int(b)>len(df) or int(b)-int(a)>max:
+    a = input("Início: ")
+    b = input("Fim: ")
+    if not a.isnumeric() or not b.isnumeric():
+        print("Intervalo inválido, digite novamente. Apenas números são permitidos.")
+        a = 1
+        b = 0
+    elif int(a)>int(b) or int(a)<0 or int(b)>len(df):
+        print("Intervalo inválido, digite novamente")
+    elif int(b)-int(a)>max:
+        print("Intervalo muito grande, digite novamente")
+```
+
+As análises de sentimentos eram realizadas apenas sobre um subconjunto de comentários, utilizado um único prompt que pede detalhadamente para o Gemini analisa-los:
+```python
+try:
+    prompt = f"Aqui está um pequeno trecho do meu banco de dados:\n{dados.to_string()}\nAgora tente adivinhar a nota dada pelos clientes dos comentarios de 1 a 5 estrelas, mande sua avaliação sem explicação, apenas com a adivinhação, e que esteja formatado dessa maneira, apenas utilizando números inteiros, sem palavras: indice:quantidade de estrelas"
+    response = chat.send_message(prompt)
+    print(response.text)
+
+    time.sleep(10)
+except:
+    print("Gemini fora do ar")
+```
+Foi utilizado `try`/`except`, visto que a API pode ficar fora do ar, e um `time.sleep(10)` para assegurar que o usuário a API não seja sobrecarregada.
+
+Os resultados foram salvos neste arquivo [CSV](csv_folder/camaroes_gemini_stars.csv), onde as avaliações eram constantemente adicionadas, permitindo o acompanhamento contínuo sem ultrapassar os custos associados ao uso excessivo da API. Essa estratégia ajudou a minimizar os gastos, mas não resolveu completamente o problema da limitação de volume de requisições, pois ainda assim era necessário aguardar um tempo para fazer outra requisição. 
+
+O código completo pode ser encontrado [aqui](code_folder/camaroes_gemini.ipynb)
 ---
 
 ## Outros códigos
@@ -202,8 +238,7 @@ def text_normalizer(text):
     text = remove_stopwords(text)
     return text
 ```
-
-* Informar o link para acessar o código. 
+O código completo pode ser achado neste [arquivo](code_folder/camaroes_sentiment.py) 
 
 ---
 
@@ -212,11 +247,9 @@ def text_normalizer(text):
 * Descrever os parâmentros avaliados. 
 * Explicar os resultados. 
 
+---
+
 ## Conclusão 
 * O trabalho atendeu aos objetivos? 
-
-
-
-
 
 ---
