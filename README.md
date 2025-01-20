@@ -9,6 +9,8 @@ Este projeto tem como objetivo explorar a aplicação de técnicas de processame
 * Augusto César da Silva Carvalho, 20230029867
 * Rita de Cassia Melo Nascimento, 20210017617
 
+[Link do vídeo explicando o projeto](https://www.youtube.com/watch?v=y6yhIZKtERk)
+
 ---
 
 ## Objetivo
