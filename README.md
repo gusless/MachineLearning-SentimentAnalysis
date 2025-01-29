@@ -4,13 +4,6 @@
 
 Este projeto tem como objetivo explorar a aplicação de técnicas de processamento de linguagem natural (PLN) na análise de sentimentos de avaliações de clientes de um restaurante. Para isso, foram utilizadas duas abordagens principais: a API Gemini, uma solução avançada baseada em modelos de aprendizado de máquina, e o SentimentIntensityAnalyzer (SIA), uma ferramenta da biblioteca NLTK.
 
-### Identificação 
-
-* Augusto César da Silva Carvalho, 20230029867
-* Rita de Cassia Melo Nascimento, 20210017617
-
-[Link do vídeo explicando o projeto](https://www.youtube.com/watch?v=y6yhIZKtERk)
-
 ---
 
 ## Objetivo
